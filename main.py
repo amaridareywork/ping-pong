@@ -1,4 +1,5 @@
 import pygame
+from constant import *
 
 
 class GameSprite(pygame.sprite.Sprite):
@@ -27,3 +28,27 @@ class Player(GameSprite):
             self.rect.x -= self.speed
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.speed
+
+
+window = pygame.display.set_mode(SCREEN_SIZE)
+window.fill(SCREEN_COLOR)
+
+timer = pygame.time.Clock()
+
+player1 = Player(PLAYER_IMG, PLAYER1_POS, PLAYER_SPEED, PLAYER_SIZE)
+player2 = Player(PLAYER_IMG, PLAYER2_POS, PLAYER_SPEED, PLAYER_SIZE)
+ball = GameSprite(BALL_IMG, BALL_POS, BALL_SPEED, BALL_SIZE)
+
+entity = [player1, player2, ball]
+
+run = True
+pause = False
+while run:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+    if not pause:
+        for en in entity:
+            en.draw(window)
+    pygame.display.update()
+    timer.tick(TICK_RATE)
